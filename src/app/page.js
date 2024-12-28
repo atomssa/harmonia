@@ -5,10 +5,9 @@ import Teoria from './components/Teoria';
 export default function Home() {
   const test_conf = {name: "Ermias", wtf: "WTF WTF"}
   return (
-    <div>
-      <h1>SVGuitar playground</h1>
-      <Teoria />  
+    <div className='font-mono'>
       <Chord conf = {test_conf}/>
+      <Teoria />  
     </div>
   );
 }

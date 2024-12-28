@@ -57,7 +57,7 @@ export const chord_config = {
     /**
      * The number of frets
      */
-    frets: 12,
+    frets: 14,
 
     /**
      * Default position if no positon is provided (first fret is 1)
@@ -133,7 +133,7 @@ export const chord_config = {
      * The minimum side padding (from the guitar to the edge of the SVG) relative to the whole width.
      * This is only applied if it's larger than the letters inside of the padding (eg the starting fret)
      */
-    sidePadding: 0.2,
+    sidePadding: 0.1,
 
     /**
      * The font family used for all letters and numbers
