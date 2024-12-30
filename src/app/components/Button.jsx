@@ -1,8 +1,4 @@
-
-function Button(props) {
-
-  const { btn_type, btn_value, isClicked, onBtnClicked, children } = props;
-
+const Button = ({ btn_type, btn_value, isClicked, onBtnClicked, children }) => {
   const handleClick = () => {
     onBtnClicked(btn_type, btn_value);
   };
@@ -18,13 +14,10 @@ function Button(props) {
       return "btn mx-2 text-primary border-primary border-2 hover:bg-primary hover:text-white transition ease-out duration-500";
   };
   return (
-    <div
-      onClick={handleClick}
-      className={buttonStyle()}
-    >
+    <div onClick={handleClick} className={buttonStyle()}>
       {children}
     </div>
   );
-}
+};
 
 export default Button;

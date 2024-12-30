@@ -3,10 +3,7 @@
 import { notes, quals2 } from "../utils/consts";
 import Button from "./Button";
 
-function Input(props) {
-
-  const { onInputChanged, root, qual } = props;
-
+const Input = ({ onInputChanged, root, qual }) => {
   const handleClick = (btn_type, btn_value) => {
     console.log(`Clicked button of type=${btn_type} and value=${btn_value}`);
     if (btn_type == "note") {
@@ -15,7 +12,6 @@ function Input(props) {
     if (btn_type == "qual") {
       onInputChanged(root, btn_value);
     }
-    
   };
 
   return (
