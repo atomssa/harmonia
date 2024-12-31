@@ -10,11 +10,11 @@ const cfg = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        primary: '#FF6363',
+        primary: "#FF6363",
       },
       fontFamily: {
-        music: ['Noto+Music']
-      }
+        music: ["Noto+Music"],
+      },
     },
   },
   plugins: [],

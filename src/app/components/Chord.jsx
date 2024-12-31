@@ -1,6 +1,6 @@
 "use client";
 
-import { fingers, } from "../utils/utils";
+import { fingers } from "../utils/utils";
 import { useEffect, useRef } from "react";
 import { SVGuitarChord } from "svguitar";
 import t from "teoria";
@@ -47,6 +47,6 @@ const Chord = ({ root, qual }) => {
       ></div>
     </div>
   );
-}
+};
 
 export default Chord;

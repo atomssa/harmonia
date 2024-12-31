@@ -44,6 +44,6 @@ const Input = ({ onInputChanged, root, qual }) => {
       </div>
     </div>
   );
-}
+};
 
 export default Input;

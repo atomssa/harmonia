@@ -21,7 +21,7 @@ export const zip = (a, b) => a.map((k, i) => [k, b[i]]);
 
 export const cap = (val) => {
   return String(val).charAt(0).toUpperCase() + String(val).slice(1);
-}
+};
 
 export const nextOctave = (n) => {
   return t.note(`${n.name()}${n.accidental()}${n.octave() + 1}`);

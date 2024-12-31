@@ -1,3 +1,1 @@
-export const chordFromStr = (s) => {
-
-}
+export const chordFromStr = (s) => {};

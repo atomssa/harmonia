@@ -25,6 +25,6 @@ const Home = () => {
       <Teoria />
     </div>
   );
-}
+};
 
 export default Home;
