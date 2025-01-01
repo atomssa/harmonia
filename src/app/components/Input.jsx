@@ -15,12 +15,12 @@ const Input = ({ onInputChanged, root, qual }) => {
 
   return (
     <div>
-      <div className="flex m-3 flex-wrap border-primary border-2 p-2 w-fit">
-        {Object.keys(notes).map((n, i) => (
+      <div className="flex mx-3 my-1 flex-wrap border-primary border-2 p-2 w-fit">
+        {Array.from(notes.keys()).map((n, i) => (
           <Button
             btn_type="note"
-            btn_value={notes[n]}
-            isClicked={notes[n] === root}
+            btn_value={notes.get(n)}
+            isClicked={notes.get(n) === root}
             key={`note_${i}`}
             onBtnClicked={handleClick}
           >
@@ -28,13 +28,13 @@ const Input = ({ onInputChanged, root, qual }) => {
           </Button>
         ))}
       </div>
-      <div className="flex m-3 flex-wrap border-primary border-2 p-2 w-fit">
+      <div className="flex mx-3 my-1 flex-wrap border-primary border-2 p-2 w-fit">
         {Array.from(quals.keys()).map((q, i) => (
           <Button
             btn_type="qual"
             btn_value={quals.get(q).il}
             isClicked={quals.get(q).il === qual}
-            key={`note_${i}`}
+            key={`qual_${i}`}
             onBtnClicked={handleClick}
           >
             {q}

@@ -18,7 +18,7 @@ const Home = () => {
 
   return (
     <div className="font-mono">
-      <div className="m-5">
+      <div className="m-3">
         <span className="text-orange-600 text-4xl">Harmonia </span>
       </div>
       <Input onInputChanged={handleInputEvent} root={root} qual={qual} />

@@ -1,46 +1,17 @@
-export const notes_l = [
-  "A",
-  "A#/Bb",
-  "B",
-  "C",
-  "C#/Db",
-  "D",
-  "D#/Eb",
-  "E",
-  "F",
-  "F#/Gb",
-  "G",
-  "G#/Ab",
-];
-export const quals_l = [
-  "m",
-  "M",
-  "7",
-  "min7",
-  "maj7",
-  "𝇉",
-  "𝇈",
-  "m6",
-  "79",
-  "maj7 13",
-  "13b",
-  "11b",
-];
-
-export const notes = {
-  A: "A",
-  "A#/Bb": "A#",
-  B: "B",
-  C: "C",
-  "C#/Db": "C#",
-  D: "D",
-  "D#/Eb": "D#",
-  E: "E",
-  F: "F",
-  "F#/Gb": "F#",
-  G: "G",
-  "G#/Ab": "G#",
-};
+export const notes = new Map([
+  ["A", "A"],
+  ["A#/Bb", "A#"],
+  ["B", "B"],
+  ["C", "C"],
+  ["C#/Db", "C#"],
+  ["D", "D"],
+  ["D#/Eb", "D#"],
+  ["E", "E"],
+  ["F", "F"],
+  ["F#/Gb", "F#"],
+  ["G", "G"],
+  ["G#/Ab", "G#"],
+]);
 
 const sty_all = { strokeColor: "black", strokeWidth: 3 };
 export const finger_sty = {
@@ -68,9 +39,9 @@ export const quals = new Map([
   ["7(9)", { il: "Mm7m9", prune: ["P5"], ren: { ...ren_all } }],
   ["7(b9)", { il: "Mm7b9", prune: ["P5"], ren: { ...ren_all } }],
   ["7(#9)", { il: "Mm7#9", prune: ["P5"], ren: { ...ren_all, A9: "#9" } }],
+  ["7(b13)", { il: "Mb13", prune: ["M9", "P11", "P5"], ren: { ...ren_all } }],
+  ["7(13)", { il: "Mm7m13", prune: ["M9", "P11", "P5"], ren: { ...ren_all } }],
   ["m7(9)", { il: "mm7m9", prune: ["P5"], ren: { ...ren_all } }],
+  ["m7(11)", { il: "mm7m11", prune: ["P5", "M9"], ren: { ...ren_all } }],
   ["Δ(13)", { il: "MM7m13", prune: ["P5", "P11", "M9"], ren: { ...ren_all } }],
-  ["13b", { il: "Mb13", prune: ["M9", "P11", "P5"], ren: { ...ren_all } }],
-  ["13", { il: "Mm7m13", prune: ["M9", "P11", "P5"], ren: { ...ren_all } }],
-  ["11b", { il: "mm11", prune: ["P5", "M9"], ren: { ...ren_all } }],
 ]);
