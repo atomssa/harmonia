@@ -20,12 +20,16 @@ const Input = ({ onInputChanged, root, qual }) => {
     <div>
       <div className="flex ml-3">
         <Popover className="relative">
-          <PopoverButton className="text-primary m-1 p-1 border-primary border-2 rounded-lg">
+          <PopoverButton
+            className="text-primary m-1 p-1 border-primary border-2 rounded-lg bg-background-300 
+            shadow-sm shadow-gray-500 hover:shadow-md hover:shadow-gray-700 hover:bg-primary 
+            hover:text-white focus:outline-0"
+          >
             Root - {root}
           </PopoverButton>
           <PopoverPanel
             anchor="bottom"
-            className="flex mx-3 my-1 flex-wrap border-primary border-2 p-2 w-fit bg-background"
+            className="flex mx-3 my-1 flex-wrap border-background-300 border-2 p-2 w-96 bg-background-200 shadow-lg"
           >
             {({ close }) =>
               Array.from(notes.keys()).map((n, i) => (
@@ -42,12 +46,16 @@ const Input = ({ onInputChanged, root, qual }) => {
         </Popover>
 
         <Popover className="relative">
-          <PopoverButton className="text-primary m-1 p-1 border-primary border-2 rounded-lg">
+          <PopoverButton
+            className="text-primary m-1 p-1 border-primary border-2 rounded-lg bg-background-300 
+            shadow-sm shadow-gray-500 hover:shadow-md hover:shadow-gray-700 hover:bg-primary 
+            hover:text-white focus:outline-0"
+          >
             Quality - {mapFindByValue(quals, (x) => x.il === qual).k}
           </PopoverButton>
           <PopoverPanel
             anchor="bottom"
-            className="flex mx-3 my-1 flex-wrap border-primary border-2 p-2 w-fit bg-background"
+            className="flex mx-3 my-1 flex-wrap border-background-300 border-2 p-2 w-96 bg-background-200 shadow-lg"
           >
             {({ close }) =>
               Array.from(quals.keys()).map((q, i) => (
