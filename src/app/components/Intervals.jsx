@@ -1,5 +1,11 @@
 import React from "react";
-import { pprint, intervals, notes, mapFindByValue } from "../utils/utils";
+import {
+  pprint,
+  intervals,
+  notes,
+  mapFindByValue,
+  formatRoot,
+} from "../utils/utils";
 import { quals } from "../utils/consts";
 
 export default function Intervals({ root, qual }) {
@@ -7,8 +13,8 @@ export default function Intervals({ root, qual }) {
     <div className="flex flex-col lg:flex-row text-primary ml-4 p-1 border-primary border-2 rounded-lg w-fit">
       <div>
         <span className="ml-4 mr-3">
-          {root}
-          {mapFindByValue(quals, (x) => x.il === qual).k}
+          {formatRoot(root)}
+          <sub>{mapFindByValue(quals, (x) => x.il === qual).k}</sub>
         </span>
       </div>
       <div>

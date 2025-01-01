@@ -30,10 +30,8 @@ export const nextOctave = (n) => {
 
 export const normalize = (n) => {
   const fullName = cap(n.toString());
-  // console.log("Normalizing", fullName);
   var fb_pos = spn_to_fboard_list[fullName];
   if (fb_pos === undefined) {
-    // console.log(`Chord ${fullName} is not in standard format. checking enharmonics`);
     const n2 = n
       .enharmonics(true)
       .find((x) => cap(x.toString()) in spn_to_fboard_list);
@@ -51,6 +49,25 @@ export const normalize = (n) => {
   }
 };
 
+export const formatAccidental = (acc) => {
+  if (acc === "x") return "##";
+  else if (acc === "bb") return "♭♭";
+  else if (acc === "b") return "♭";
+  else return acc;
+};
+
+export const formatRoot = (root) => {
+  const accs = ["#", "b", "x", "bb"];
+  if (accs.includes(root.substring(1, 3))) {
+    return (
+      <span>
+        {root[0]}
+        <sup>{formatAccidental(root.substring(1, 3))}</sup>
+      </span>
+    );
+  }
+  return root;
+};
 export const mapFindByValue = (map, searchFunc) => {
   for (let [key, value] of map.entries()) {
     if (searchFunc(value)) return { k: key, v: value };
@@ -105,7 +122,9 @@ export const intervals = (root, qual) => {
 
 export const notes = (root, qual) => {
   const chord = t.note(root).chord(qual);
-  const cN = chord.notes().map((x) => x.toString());
+  const cN = chord
+    .notes()
+    .map((x) => formatRoot(`${x.name().toUpperCase()}${x.accidental()}`));
   const cV = chord.voicing().map((x) => x.toString());
   const vn = new Map(cV.map((k, i) => [k, cN[i]]));
   const prune = mapFindByValue(quals, (x) => x.il === qual).v.prune;
