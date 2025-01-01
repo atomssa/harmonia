@@ -12,18 +12,19 @@ export default function Intervals({ root, qual }) {
   return (
     <div className="flex flex-col lg:flex-row text-primary ml-4 p-1 border-primary border-2 rounded-lg w-fit">
       <div>
-        <span className="ml-4 mr-3">
+        <span className="mr-1">Chord:</span>
+        <span className="rnd">
           {formatRoot(root)}
           <sub>{mapFindByValue(quals, (x) => x.il === qual).k}</sub>
         </span>
       </div>
-      <div>
-        <span className="ml-4 mr-3">Intervals:</span>
-        <span className="mr-10">{pprint(intervals(root, qual))}</span>
+      <div className="ml-5">
+        <span className="mr-1">Intervals:</span>
+        <span className="mr-1">{pprint(intervals(root, qual))}</span>
       </div>
-      <div>
-        <span className="ml-4 mr-3">Notes:</span>
-        <span>{pprint(notes(root, qual))}</span>
+      <div className="ml-5">
+        <span className="mr-1">Notes:</span>
+        <span className="mr-1">{pprint(notes(root, qual))}</span>
       </div>
     </div>
   );

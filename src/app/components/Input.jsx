@@ -43,7 +43,7 @@ const Input = ({ onInputChanged, root, qual }) => {
 
         <Popover className="relative">
           <PopoverButton className="text-primary m-1 p-1 border-primary border-2 rounded-lg">
-            Chord - {mapFindByValue(quals, (x) => x.il === qual).k}
+            Quality - {mapFindByValue(quals, (x) => x.il === qual).k}
           </PopoverButton>
           <PopoverPanel
             anchor="bottom"

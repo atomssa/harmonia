@@ -25,3 +25,7 @@ body {
 .btn {
   @apply rounded-full py-2 px-3 text-xs font-bold tracking-wider cursor-pointer;
 }
+
+.rnd {
+  @apply border-primary border-2 rounded-full ml-2 p-1 inline-block w-fit min-w-9 text-center;
+}

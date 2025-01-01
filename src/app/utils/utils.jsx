@@ -4,14 +4,15 @@ import { quals } from "./consts";
 import { finger_sty } from "./consts";
 export const pprint = (a) => {
   return a
-    .map((n) => <span>{n} </span>)
+    .map((n) => <span className="rnd">{n}</span>)
     .reduce(
       (acc, x) =>
         acc === null ? (
           x
         ) : (
           <>
-            {acc} | {x}
+            {acc}
+            {x}
           </>
         ),
       null
