@@ -10,7 +10,6 @@ const Chord = ({ root, qual }) => {
   const chordDivRef = useRef(null);
 
   useEffect(() => {
-    console.log("Chord component rendered");
     try {
       // first check that input values are valid
       t.note(root);

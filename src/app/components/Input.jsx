@@ -1,11 +1,10 @@
 "use client";
 
-import { notes, quals2 } from "../utils/consts";
+import { notes, quals } from "../utils/consts";
 import Button from "./Button";
 
 const Input = ({ onInputChanged, root, qual }) => {
   const handleClick = (btn_type, btn_value) => {
-    console.log(`Clicked button of type=${btn_type} and value=${btn_value}`);
     if (btn_type == "note") {
       onInputChanged(btn_value, qual);
     }
@@ -30,11 +29,11 @@ const Input = ({ onInputChanged, root, qual }) => {
         ))}
       </div>
       <div className="flex m-3">
-        {Array.from(quals2.keys()).map((q, i) => (
+        {Array.from(quals.keys()).map((q, i) => (
           <Button
             btn_type="qual"
-            btn_value={quals2.get(q)}
-            isClicked={quals2.get(q) === qual}
+            btn_value={quals.get(q).il}
+            isClicked={quals.get(q).il === qual}
             key={`note_${i}`}
             onBtnClicked={handleClick}
           >

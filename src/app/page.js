@@ -4,6 +4,7 @@ import { useState } from "react";
 import Chord from "./components/Chord";
 import Input from "./components/Input";
 import Teoria from "./components/Teoria";
+import Intervals from "./components/Intervals";
 
 const Home = () => {
   const [root, setRoot] = useState("A");
@@ -18,9 +19,10 @@ const Home = () => {
   return (
     <div className="font-mono">
       <div className="m-5">
-        <span className="text-orange-600 text-4xl">SVGuitar </span>
+        <span className="text-orange-600 text-4xl">Harmonia </span>
       </div>
       <Input onInputChanged={handleInputEvent} root={root} qual={qual} />
+      <Intervals root={root} qual={qual} />
       <Chord root={root} qual={qual} />
       <Teoria />
     </div>
