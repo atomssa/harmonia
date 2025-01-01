@@ -100,7 +100,7 @@ export const intervals = (root, qual) => {
     .voicing()
     .map((x) => x.toString())
     .map((x) => ren[x] ?? x)
-    .filter((x) => !(x in prune));
+    .filter((x) => !prune.includes(x));
 };
 
 export const notes = (root, qual) => {
@@ -111,7 +111,7 @@ export const notes = (root, qual) => {
   const prune = mapFindByValue(quals, (x) => x.il === qual).v.prune;
   let notes = [];
   for (let [key, value] of vn.entries()) {
-    if (!(key in prune)) notes.push(value);
+    if (!prune.includes(key)) notes.push(value);
   }
   return notes;
 };
