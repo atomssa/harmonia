@@ -38,10 +38,10 @@ const Chord = ({ root, qual }) => {
   });
 
   return (
-    <div className="font-mono my-5 max-w-screen-xl">
+    <div className="font-mono my-5 lg:max-w-screen-xl">
       <div
         id="chart"
-        className="mx-12 p-4 rounded-xl shadow-xl bg-gray-50"
+        className="mx-3 p-3 lg:mx-6 rounded-xl shadow-xl bg-gray-50"
         ref={chordDivRef}
       ></div>
     </div>
