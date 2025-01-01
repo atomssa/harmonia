@@ -17,19 +17,16 @@ const Chord = ({ root, qual }) => {
       // first empty the div if there is already svg in it
       if (chordDivRef.current) {
         while (chordDivRef.current.firstChild) {
-          // console.log("Found child in div. emptying before drawing new svg");
           chordDivRef.current.removeChild(chordDivRef.current.firstChild);
         }
       }
       const chart = new SVGuitarChord("#chart");
-      // const new_chord_spec = { ...chord_spec, fingers: fingers(root, qual) }
       const new_chord_spec = {
         title: "",
         position: 1,
         barres: [],
         fingers: fingers(root, qual, chord_config.frets),
       };
-      // console.log("new chord spec", new_chord_spec.fingers);
       chart.configure(chord_config).chord(new_chord_spec).draw();
     } catch (err) {
       console.log("Input chord root & type not OK");
