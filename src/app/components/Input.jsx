@@ -15,7 +15,7 @@ const Input = ({ onInputChanged, root, qual }) => {
 
   return (
     <div>
-      <div className="flex m-3">
+      <div className="flex m-3 flex-wrap border-primary border-2 p-2 w-fit">
         {Object.keys(notes).map((n, i) => (
           <Button
             btn_type="note"
@@ -28,7 +28,7 @@ const Input = ({ onInputChanged, root, qual }) => {
           </Button>
         ))}
       </div>
-      <div className="flex m-3">
+      <div className="flex m-3 flex-wrap border-primary border-2 p-2 w-fit">
         {Array.from(quals.keys()).map((q, i) => (
           <Button
             btn_type="qual"

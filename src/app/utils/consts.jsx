@@ -66,6 +66,8 @@ export const quals = new Map([
   ["O", { il: "mb5M6", prune: [], ren: { ...ren_all, M6: "bb7" } }],
   ["m6", { il: "m3m6", prune: [], ren: { ...ren_all } }],
   ["7(9)", { il: "Mm7m9", prune: ["P5"], ren: { ...ren_all } }],
+  ["7(b9)", { il: "Mm7b9", prune: ["P5"], ren: { ...ren_all } }],
+  ["7(#9)", { il: "Mm7#9", prune: ["P5"], ren: { ...ren_all, A9: "#9" } }],
   ["m7(9)", { il: "mm7m9", prune: ["P5"], ren: { ...ren_all } }],
   ["Δ(13)", { il: "MM7m13", prune: ["P5", "P11", "M9"], ren: { ...ren_all } }],
   ["13b", { il: "Mb13", prune: ["M9", "P11", "P5"], ren: { ...ren_all } }],
