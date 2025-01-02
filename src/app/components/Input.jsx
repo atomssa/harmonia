@@ -1,21 +1,32 @@
 "use client";
 
-import { notes, quals } from "../utils/consts";
+import { notes, quals, caged_all } from "../utils/consts";
 import { mapFindByValue } from "../utils/utils";
 import Button from "./Button";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 
-const Input = ({ onInputChanged, root, qual }) => {
+const Input = ({ onInputChanged, root, qual, forms }) => {
   const handleClick = (btn_type, btn_value, closePopover) => {
     if (btn_type == "note") {
-      onInputChanged(btn_value, qual);
+      onInputChanged(btn_value, qual, forms);
     }
     if (btn_type == "qual") {
-      onInputChanged(root, btn_value);
+      onInputChanged(root, btn_value, forms);
     }
     closePopover();
   };
 
+  const toggleForm = (f) => {
+    if (forms.includes(f)) {
+      onInputChanged(
+        root,
+        qual,
+        forms.filter((x) => x !== f)
+      );
+    } else {
+      onInputChanged(root, qual, [...forms, f]);
+    }
+  };
   return (
     <div>
       <div className="flex ml-3">
@@ -72,7 +83,51 @@ const Input = ({ onInputChanged, root, qual }) => {
             }
           </PopoverPanel>
         </Popover>
+        <div className="flex">
+          <p className="ml-4 text-primary py-2">CAGED form: </p>
+          <Button
+            isClicked={forms.includes("E")}
+            onBtnClicked={() => toggleForm("E")}
+          >
+            E
+          </Button>
+          <Button
+            isClicked={forms.includes("A")}
+            onBtnClicked={() => toggleForm("A")}
+          >
+            A
+          </Button>
+          <Button
+            isClicked={forms.includes("D")}
+            onBtnClicked={() => toggleForm("D")}
+          >
+            D
+          </Button>
+        </div>
+        {/* <div>
+          <p>WTF</p>
+          {Object.keys(caged_all).forEach((f) => (
+            <Button
+              key={`form_${f}`}
+              isClicked={forms.includes(f)}
+              onBtnClicked={() => onInputChanged(root, qual, f)}
+            >
+              {f}
+            </Button>
+          ))}
+        </div> */}
       </div>
+      {/* <div>
+        {Object.keys(caged_all).forEach((f) => (
+          <Button
+            key={`form_${f}`}
+            isClicked={forms.includes(f)}
+            onBtnClicked={() => onInputChanged(root, qual, f)}
+          >
+            {f}
+          </Button>
+        ))}
+      </div> */}
     </div>
   );
 };

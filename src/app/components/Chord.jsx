@@ -5,8 +5,9 @@ import { useEffect, useRef } from "react";
 import { SVGuitarChord } from "svguitar";
 import t from "teoria";
 import { chord_config } from "../utils/config";
+import { hsl2str } from "../utils/utils";
 
-const Chord = ({ root, qual }) => {
+const Chord = ({ root, qual, forms }) => {
   const chordDivRef = useRef(null);
 
   useEffect(() => {
@@ -25,7 +26,7 @@ const Chord = ({ root, qual }) => {
         title: "",
         position: 1,
         barres: [],
-        fingers: fingers(root, qual, chord_config.frets),
+        fingers: hsl2str(fingers(root, qual, forms, chord_config.frets)),
       };
       chart.configure(chord_config).chord(new_chord_spec).draw();
     } catch (err) {

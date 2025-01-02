@@ -1,6 +1,6 @@
 import t from "teoria";
 import { spn_to_fboard_list } from "../utils/spn";
-import { quals } from "./consts";
+import { hsla, quals } from "./consts";
 import { finger_sty } from "./consts";
 export const pprint = (a) => {
   return a
@@ -69,6 +69,7 @@ export const formatRoot = (root) => {
   }
   return root;
 };
+
 export const mapFindByValue = (map, searchFunc) => {
   for (let [key, value] of map.entries()) {
     if (searchFunc(value)) return { k: key, v: value };
@@ -77,7 +78,7 @@ export const mapFindByValue = (map, searchFunc) => {
 };
 
 // takes note and chord def and returns fretting positions
-export const fingers = (root, qual, max_frets = 12) => {
+export const fingers = (root, qual, forms, max_frets = 12) => {
   const chord = t.note(root).chord(qual);
   const cN = chord.notes();
   const cV = chord.voicing().map((x) => x.toString());
@@ -106,7 +107,63 @@ export const fingers = (root, qual, max_frets = 12) => {
       });
     }
   });
+  if (forms.length > 0) {
+    lighten_list(res);
+    highlight(res, qual, forms);
+  }
   return res;
+};
+
+export const hsl2str = (fingers) => {
+  fingers.forEach((f) => {
+    Object.keys(f[2]).forEach((k) => {
+      if (f[2][k] instanceof hsla) {
+        f[2][k] = f[2][k].toString();
+      }
+    });
+  });
+  return fingers;
+};
+
+export const darken = (f) => {
+  Object.keys(f[2]).forEach((k) => {
+    if (f[2][k] instanceof hsla) {
+      f[2][k] = f[2][k].darken();
+    }
+  });
+};
+
+export const lighten = (f) => {
+  Object.keys(f[2]).forEach((k) => {
+    if (f[2][k] instanceof hsla) {
+      f[2][k] = f[2][k].lighten();
+    }
+  });
+};
+export const lighten_list = (fingers) => {
+  fingers.forEach((f) => lighten(f));
+  return fingers;
+};
+
+export const strIdx = { E: 6, A: 5, D: 4, G: 3, B: 2, e: 1 };
+
+export const highlight = (fingers, qual, forms) => {
+  const match = (f, s, deg) => {
+    return (
+      f[0] === s &&
+      (f[2].text.includes(deg) || (f[2].text === "R" && deg === 1))
+    );
+  };
+  const q = mapFindByValue(quals, (x) => x.il === qual).v;
+  if (forms.length === 0) return fingers;
+  forms.forEach((form) => {
+    q.caged[form].forEach((x, i) => {
+      const f = mapFindByValue(fingers, (y) =>
+        match(y, strIdx[form] - i, q.caged[form][i])
+      ).v;
+      darken(f);
+    });
+  });
 };
 
 export const intervals = (root, qual) => {
