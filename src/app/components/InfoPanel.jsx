@@ -13,7 +13,7 @@ export default function InfoPanel({ root, qual }) {
         </span>
       </div>
       <div className="ml-2 lg:ml-5 mb-1 lg:mb-0">
-        <span className="mr-1">Intervals:</span>
+        <span className="mr-1">Degrees:</span>
         <span className="mr-1">{pprint(intervals(root, qual))}</span>
       </div>
       <div className="ml-2 lg:ml-5 mb-1 lg:mb-0">
