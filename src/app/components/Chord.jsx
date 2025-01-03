@@ -4,7 +4,7 @@ import { fingers } from "../utils/utils";
 import { useEffect, useRef } from "react";
 import { SVGuitarChord } from "svguitar";
 import t from "teoria";
-import { chord_config } from "../utils/config";
+import { chord_config } from "../utils/svguitar_config";
 import { hsl2str } from "../utils/utils";
 
 const Chord = ({ root, qual, forms }) => {
