@@ -83,7 +83,9 @@ const Input = ({ onInputChanged, root, qual, forms }) => {
         <PopoverPanel anchor="bottom end" className="popover-panel w-it">
           {({ close }) => (
             <>
-              {Object.keys(caged_all).map((f) => (
+              {Object.keys(
+                mapFindByValue(quals, (x) => x.il === qual).v.caged
+              ).map((f) => (
                 <Button
                   key={`caged_${f}`}
                   isClicked={forms.includes(f)}
