@@ -160,11 +160,11 @@ export const strIdx = { E: 6, A: 5, D: 4, G: 6, C: 5 };
 
 export const highlight = (fingers, qual, forms, max_frets) => {
   if (forms.length === 0) return fingers;
-  const match = (f, s, deg, r) => {
+  const match = (f, s, deg, r, max_frets_filt = max_frets) => {
     return (
       f[0] === s &&
       (f[2].text.includes(deg) || (f[2].text === "R" && deg === 1)) &&
-      f[1] <= max_frets &&
+      f[1] <= max_frets_filt &&
       (r === undefined || Math.abs(r[1] - f[1]) <= 5)
     );
   };
@@ -172,13 +172,16 @@ export const highlight = (fingers, qual, forms, max_frets) => {
   forms.forEach((form) => {
     const degrees = q.caged[form];
     const degrees_nn = degrees.filter((d) => d !== null);
+    // console.log("degrees=", degrees);
     const roots = filt_bv(fingers, (y) =>
-      match(y, strIdx[form], degrees[0])
+      match(y, strIdx[form], degrees[0], undefined, max_frets - 2)
     ).map((x) => x.v);
+
     let toUnfade = [];
     let idx = 0;
     while (idx < roots.length && toUnfade.length != degrees_nn.length) {
       const root = roots[idx];
+      // console.log(`Checking root idx=${idx}`, root);
       toUnfade = [];
       degrees.forEach((deg, i) => {
         if (deg != null) {
@@ -189,6 +192,9 @@ export const highlight = (fingers, qual, forms, max_frets) => {
         }
       });
       idx++;
+      // console.log(
+      //   `idx=${idx}, toUnfade.len=${toUnfade.length} deg_nn.len=${degrees_nn.length}`
+      // );
     }
     toUnfade.forEach((f) => unfade(f));
   });
