@@ -29,6 +29,10 @@ const Chord = ({ root, qual, forms }) => {
         fingers: hsl2str(fingers(root, qual, forms, chord_config.frets)),
       };
       chart.configure(chord_config).chord(new_chord_spec).draw();
+      document.querySelectorAll("rect.finger").forEach((e) => {
+        e.setAttribute("rx", 8);
+        e.setAttribute("ry", 8);
+      });
     } catch (err) {
       console.log("Input chord root & type not OK");
       console.log(err);
