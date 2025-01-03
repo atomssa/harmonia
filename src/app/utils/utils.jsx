@@ -71,7 +71,7 @@ export const formatRoot = (root) => {
   return root;
 };
 
-export const mapFiltByValue = (map, searchFunc) => {
+export const filt_bv = (map, searchFunc) => {
   let ret = [];
   for (let [key, value] of map.entries()) {
     if (searchFunc(value)) ret.push({ k: key, v: value });
@@ -79,7 +79,7 @@ export const mapFiltByValue = (map, searchFunc) => {
   return ret;
 };
 
-export const mapFindByValue = (map, searchFunc) => {
+export const find_bv = (map, searchFunc) => {
   for (let [key, value] of map.entries()) {
     if (searchFunc(value)) return { k: key, v: value };
   }
@@ -91,8 +91,8 @@ export const fingers = (root, qual, forms, max_frets = 12) => {
   const chord = t.note(root).chord(qual);
   const cN = chord.notes();
   const cV = chord.voicing().map((x) => x.toString());
-  const prune = mapFindByValue(quals, (x) => x.il === qual).v.prune;
-  const ren = mapFindByValue(quals, (x) => x.il === qual).v.ren;
+  const prune = find_bv(quals, (x) => x.il === qual).v.prune;
+  const ren = find_bv(quals, (x) => x.il === qual).v.ren;
   const vn = new Map(cN.map((k, i) => [k, cV[i]]));
   var res = [];
   vn.forEach((v, k) => {
@@ -168,10 +168,10 @@ export const highlight = (fingers, qual, forms, max_frets) => {
       (r === undefined || Math.abs(r[1] - f[1]) <= 5)
     );
   };
-  const q = mapFindByValue(quals, (x) => x.il === qual).v;
+  const q = find_bv(quals, (x) => x.il === qual).v;
   forms.forEach((form) => {
     const degrees = q.caged[form];
-    const roots = mapFiltByValue(fingers, (y) =>
+    const roots = filt_bv(fingers, (y) =>
       match(y, strIdx[form], degrees[0])
     ).map((x) => x.v);
 
@@ -181,7 +181,7 @@ export const highlight = (fingers, qual, forms, max_frets) => {
       const root = roots[idx];
       toUnfade = [];
       degrees.forEach((deg, i) => {
-        const f = mapFindByValue(fingers, (y) =>
+        const f = find_bv(fingers, (y) =>
           match(y, strIdx[form] - i, deg, root)
         ).v;
         f && toUnfade.push(f);
@@ -193,8 +193,8 @@ export const highlight = (fingers, qual, forms, max_frets) => {
 };
 
 export const intervals = (root, qual) => {
-  const prune = mapFindByValue(quals, (x) => x.il === qual).v.prune;
-  const ren = mapFindByValue(quals, (x) => x.il === qual).v.ren;
+  const prune = find_bv(quals, (x) => x.il === qual).v.prune;
+  const ren = find_bv(quals, (x) => x.il === qual).v.ren;
   return t
     .note(root)
     .chord(qual)
@@ -211,7 +211,7 @@ export const notes = (root, qual) => {
     .map((x) => formatRoot(`${x.name().toUpperCase()}${x.accidental()}`));
   const cV = chord.voicing().map((x) => x.toString());
   const vn = new Map(cV.map((k, i) => [k, cN[i]]));
-  const prune = mapFindByValue(quals, (x) => x.il === qual).v.prune;
+  const prune = find_bv(quals, (x) => x.il === qual).v.prune;
   let notes = [];
   for (let [key, value] of vn.entries()) {
     if (!prune.includes(key)) notes.push(value);

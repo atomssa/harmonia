@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  pprint,
-  intervals,
-  notes,
-  mapFindByValue,
-  formatRoot,
-} from "../utils/utils";
+import { pprint, intervals, notes, find_bv, formatRoot } from "../utils/utils";
 import { quals } from "../utils/consts";
 
 export default function InfoPanel({ root, qual }) {
@@ -15,7 +9,7 @@ export default function InfoPanel({ root, qual }) {
         <span className="mr-1">Chord:</span>
         <span className="rnd">
           {formatRoot(root)}
-          <sub>{mapFindByValue(quals, (x) => x.il === qual).k}</sub>
+          <sub>{find_bv(quals, (x) => x.il === qual).k}</sub>
         </span>
       </div>
       <div className="ml-2 lg:ml-5 mb-1 lg:mb-0">

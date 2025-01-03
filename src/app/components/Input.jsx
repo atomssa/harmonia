@@ -1,7 +1,7 @@
 "use client";
 
 import { notes, quals, caged_all } from "../utils/consts";
-import { mapFindByValue, pprint } from "../utils/utils";
+import { find_bv, pprint } from "../utils/utils";
 import Button from "./Button";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 
@@ -11,7 +11,10 @@ const Input = ({ onInputChanged, root, qual, forms }) => {
       onInputChanged(btn_value, qual, forms);
     }
     if (btn_type == "qual") {
-      onInputChanged(root, btn_value, forms);
+      // remove caged forms that are not allowed for the new qual
+      const allowed = find_bv(quals, (x) => x.il === btn_value).v.caged;
+      const new_forms = forms.filter((f) => f in allowed);
+      onInputChanged(root, btn_value, new_forms);
     }
     closePopover();
   };
@@ -57,7 +60,7 @@ const Input = ({ onInputChanged, root, qual, forms }) => {
         <PopoverButton className="popover-btn">
           <p className="border-2 border-transparent">Quality</p>
           <p className="ml-1">
-            {pprint([mapFindByValue(quals, (x) => x.il === qual).k], "rnd-sm")}
+            {pprint([find_bv(quals, (x) => x.il === qual).k], "rnd-sm")}
           </p>
         </PopoverButton>
         <PopoverPanel anchor="bottom" className="popover-panel">
@@ -83,17 +86,17 @@ const Input = ({ onInputChanged, root, qual, forms }) => {
         <PopoverPanel anchor="bottom end" className="popover-panel w-it">
           {({ close }) => (
             <>
-              {Object.keys(
-                mapFindByValue(quals, (x) => x.il === qual).v.caged
-              ).map((f) => (
-                <Button
-                  key={`caged_${f}`}
-                  isClicked={forms.includes(f)}
-                  onBtnClicked={() => toggleForm(f, close)}
-                >
-                  {f}
-                </Button>
-              ))}
+              {Object.keys(find_bv(quals, (x) => x.il === qual).v.caged).map(
+                (f) => (
+                  <Button
+                    key={`caged_${f}`}
+                    isClicked={forms.includes(f)}
+                    onBtnClicked={() => toggleForm(f, close)}
+                  >
+                    {f}
+                  </Button>
+                )
+              )}
               {forms.length > 0 && (
                 <Button
                   key={`caged_clr`}

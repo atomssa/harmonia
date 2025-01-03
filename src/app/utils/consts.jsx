@@ -178,6 +178,8 @@ export const quals = new Map([
         E: { 1: null, 2: 7, 5: null },
         A: { 2: 7, 4: null },
         D: { 2: 7 },
+        C: null,
+        G: null,
       }),
     },
   ],
