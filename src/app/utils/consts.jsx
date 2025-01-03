@@ -57,8 +57,10 @@ export let finger_sty = {
   },
   P5: { color: new hsla(120, 1, 0.25), ...sty_all },
   b5: { color: new hsla(120, 1, 0.25), ...sty_all },
+  d5: { color: new hsla(120, 1, 0.25), ...sty_all },
   M7: { color: new hsla(0, 0, 0.31), ...sty_all },
   m7: { color: new hsla(0, 0, 0.31), ...sty_all },
+  M6: { color: new hsla(100, 0, 0.31), ...sty_all },
 };
 
 export const ren_all = { P1: "R" };
@@ -87,6 +89,8 @@ export const fix_caged = (fix) => {
   });
   return ret;
 };
+
+const SKIP = undefined;
 
 // il: interval list
 // prune: to remove
@@ -149,8 +153,8 @@ export const quals = new Map([
       ren: { ...ren_all },
       alt: [],
       caged: fix_caged({
-        E: { 1: undefined, 2: 7, 5: undefined },
-        A: { 2: 7, 4: undefined },
+        E: { 1: SKIP, 2: 7, 5: SKIP },
+        A: { 2: 7, 4: SKIP },
         D: { 2: 7 },
         C: { 3: 7 },
       }),
@@ -163,7 +167,11 @@ export const quals = new Map([
       prune: [],
       ren: { ...ren_all },
       alt: [],
-      caged: { ...caged_all },
+      caged: fix_caged({
+        E: { 1: SKIP, 2: 7, 5: SKIP },
+        A: { 2: 7, 4: SKIP },
+        D: { 2: 7 },
+      }),
     },
   ],
   [
@@ -173,7 +181,11 @@ export const quals = new Map([
       prune: [],
       ren: { ...ren_all, M6: "♭♭7" },
       alt: [],
-      caged: { ...caged_all },
+      caged: fix_caged({
+        E: { 1: SKIP, 2: 7, 5: SKIP },
+        A: { 2: 7, 4: SKIP },
+        D: { 2: 7 },
+      }),
     },
   ],
   [
