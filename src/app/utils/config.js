@@ -56,7 +56,7 @@ export const chord_config = {
   /**
    * The number of frets
    */
-  frets: 14,
+  frets: 12,
 
   /**
    * Default position if no positon is provided (first fret is 1)
