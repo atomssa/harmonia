@@ -83,18 +83,14 @@ export const fix_caged = (fix) => {
       if (fix[k] === null) {
         delete ret[k];
       } else {
-        ret[k] = caged_all[k]
-          .map((x, i) => {
-            return i in fix[k] ? fix[k][i] : x;
-          })
-          .filter((x) => x !== 0);
+        ret[k] = caged_all[k].map((x, i) => {
+          return i in fix[k] ? fix[k][i] : x;
+        });
       }
     }
   });
   return ret;
 };
-
-const SKIP = undefined;
 
 // il: interval list
 // prune: to remove
@@ -164,6 +160,7 @@ export const quals = new Map([
         A: { 2: 7, 4: null },
         D: { 2: 7 },
         C: { 3: 7 },
+        G: null,
       }),
     },
   ],
@@ -191,8 +188,8 @@ export const quals = new Map([
       ren: { ...ren_all, M6: "♭♭7" },
       alt: [],
       caged: fix_caged({
-        E: { 1: SKIP, 2: 7, 5: SKIP },
-        A: { 2: 7, 4: SKIP },
+        E: { 1: null, 2: 7, 5: null },
+        A: { 2: 7, 4: null },
         D: { 2: 7 },
       }),
     },

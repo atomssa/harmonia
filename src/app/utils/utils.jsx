@@ -171,20 +171,22 @@ export const highlight = (fingers, qual, forms, max_frets) => {
   const q = find_bv(quals, (x) => x.il === qual).v;
   forms.forEach((form) => {
     const degrees = q.caged[form];
+    const degrees_nn = degrees.filter((d) => d !== null);
     const roots = filt_bv(fingers, (y) =>
       match(y, strIdx[form], degrees[0])
     ).map((x) => x.v);
-
     let toUnfade = [];
     let idx = 0;
-    while (idx < roots.length && toUnfade.length != degrees.length) {
+    while (idx < roots.length && toUnfade.length != degrees_nn.length) {
       const root = roots[idx];
       toUnfade = [];
       degrees.forEach((deg, i) => {
-        const f = find_bv(fingers, (y) =>
-          match(y, strIdx[form] - i, deg, root)
-        ).v;
-        f && toUnfade.push(f);
+        if (deg != null) {
+          const f = find_bv(fingers, (y) =>
+            match(y, strIdx[form] - i, deg, root)
+          ).v;
+          f && toUnfade.push(f);
+        }
       });
       idx++;
     }
