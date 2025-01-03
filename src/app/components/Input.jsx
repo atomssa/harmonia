@@ -98,7 +98,7 @@ const Input = ({ onInputChanged, root, qual, forms }) => {
                   isClicked={false}
                   onBtnClicked={() => toggleForm([], close)}
                 >
-                  CLR
+                  🗙
                 </Button>
               )}
             </>
