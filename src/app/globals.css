@@ -39,5 +39,5 @@ body {
 }
 
 .popover-panel {
-  @apply flex mx-3 my-1 flex-wrap border-background-300 border-2 p-2 w-96 bg-background-200 shadow-lg;
+  @apply flex mx-3 my-1 flex-wrap border-background-300 border-2 p-2 w-fit bg-background-200 shadow-lg;
 }

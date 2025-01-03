@@ -14,17 +14,20 @@ export const notes = new Map([
 ]);
 
 export class hsla {
-  constructor(h, s, l, a = 1.0) {
+  constructor(h, s, l, a = 1.0, faded = false) {
     this.h = h;
     this.s = s;
     this.l = l;
     this.a = a;
+    this.faded = faded;
   }
-  lighten() {
-    return new hsla(this.h, this.s, Math.min(this.l + 0.55, 0.95), 0.5);
+  fade() {
+    if (this.faded) return this;
+    return new hsla(this.h, this.s, Math.min(this.l + 0.55, 0.95), 0.5, true);
   }
-  darken() {
-    return new hsla(this.h, this.s, Math.min(this.l - 0.55, 0.95), 1.0);
+  unfade() {
+    if (!this.faded) return this;
+    return new hsla(this.h, this.s, Math.min(this.l - 0.55, 0.95), 1.0, false);
   }
   fmt() {
     if (this.a != 1) {
@@ -41,12 +44,12 @@ export class hsla {
 }
 
 const sty_all = {
-  strokeColor: new hsla(0, 0, 0),
+  strokeColor: new hsla(0, 0, 0.2),
   strokeWidth: 4,
 };
 
 export let finger_sty = {
-  P1: { color: new hsla(240, 1, 0.5), shape: "square", ...sty_all },
+  P1: { color: new hsla(240, 1, 0.5), shape: "square", radius: 7, ...sty_all },
   m3: { color: new hsla(0, 1, 0.5), ...sty_all },
   M3: {
     color: new hsla(0, 1, 0.5),
@@ -54,6 +57,8 @@ export let finger_sty = {
   },
   P5: { color: new hsla(120, 1, 0.25), ...sty_all },
   b5: { color: new hsla(120, 1, 0.25), ...sty_all },
+  M7: { color: new hsla(0, 0, 0.31), ...sty_all },
+  m7: { color: new hsla(0, 0, 0.31), ...sty_all },
 };
 
 export const ren_all = { P1: "R" };
@@ -62,7 +67,7 @@ export const ren_all = { P1: "R" };
 export const caged_all = {
   C: [1, 3, 5, 1, 3],
   A: [1, 5, 1, 3, 5],
-  G: [1, 3, 5, 1, 5, 1],
+  G: [1, 3, 5, 1, 3, 1],
   E: [1, 5, 1, 3, 5, 1],
   D: [1, 5, 1, 3],
 };
@@ -115,7 +120,7 @@ export const quals = new Map([
       ren: { ...ren_all },
       alt: [],
       caged: fix_caged({
-        C: { 2: 7, 5: 0 },
+        C: { 2: 7, 4: undefined },
         E: { 2: 7 },
         D: { 2: 7 },
         A: { 2: 7 },
@@ -144,9 +149,10 @@ export const quals = new Map([
       ren: { ...ren_all },
       alt: [],
       caged: fix_caged({
-        E: { 1: 0, 2: 7, 5: 0 },
-        A: { 2: 7, 4: 0 },
+        E: { 1: undefined, 2: 7, 5: undefined },
+        A: { 2: 7, 4: undefined },
         D: { 2: 7 },
+        C: { 3: 7 },
       }),
     },
   ],

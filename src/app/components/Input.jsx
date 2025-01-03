@@ -17,7 +17,9 @@ const Input = ({ onInputChanged, root, qual, forms }) => {
   };
 
   const toggleForm = (f, closePopover) => {
-    if (forms.includes(f)) {
+    if (f instanceof Array && f.length == 0) {
+      onInputChanged(root, qual, []);
+    } else if (forms.includes(f)) {
       onInputChanged(
         root,
         qual,
@@ -78,18 +80,29 @@ const Input = ({ onInputChanged, root, qual, forms }) => {
           <p className="border-2 border-transparent"> CAGED </p>
           <p className="ml-1"> {pprint(forms, "rnd-sm")} </p>
         </PopoverButton>
-        <PopoverPanel anchor="bottom" className="popover-panel w-it">
-          {({ close }) =>
-            Object.keys(caged_all).map((f) => (
-              <Button
-                key={`caged_${f}`}
-                isClicked={forms.includes(f)}
-                onBtnClicked={() => toggleForm(f, close)}
-              >
-                {f}
-              </Button>
-            ))
-          }
+        <PopoverPanel anchor="bottom end" className="popover-panel w-it">
+          {({ close }) => (
+            <>
+              {Object.keys(caged_all).map((f) => (
+                <Button
+                  key={`caged_${f}`}
+                  isClicked={forms.includes(f)}
+                  onBtnClicked={() => toggleForm(f, close)}
+                >
+                  {f}
+                </Button>
+              ))}
+              {forms.length > 0 && (
+                <Button
+                  key={`caged_clr`}
+                  isClicked={false}
+                  onBtnClicked={() => toggleForm([], close)}
+                >
+                  CLR
+                </Button>
+              )}
+            </>
+          )}
         </PopoverPanel>
       </Popover>
     </div>

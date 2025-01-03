@@ -40,7 +40,7 @@ const Chord = ({ root, qual, forms }) => {
   });
 
   return (
-    <div className="font-mono my-5 lg:max-w-screen-xl">
+    <div className="font-mono my-1 py-1 lg:max-w-screen-xl">
       <div
         id="chart"
         className="mx-3 p-3 lg:mx-6 rounded-xl shadow-xl bg-gray-50"

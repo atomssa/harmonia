@@ -2,9 +2,9 @@ import t from "teoria";
 import { spn_to_fboard_list } from "../utils/spn";
 import { hsla, quals } from "./consts";
 import { finger_sty } from "./consts";
-export const pprint = (a) => {
+export const pprint = (a, cls = "rnd") => {
   return a
-    .map((n) => <span className="rnd">{n}</span>)
+    .map((n) => <span className={cls}>{n}</span>)
     .reduce(
       (acc, x) =>
         acc === null ? (
@@ -91,7 +91,8 @@ export const fingers = (root, qual, forms, max_frets = 12) => {
       const n1 = normalize(k);
       const n2 = nextOctave(n1);
       const n3 = nextOctave(n2);
-      const nn = [n1, n2, n3];
+      const n4 = nextOctave(n3);
+      const nn = [n1, n2, n3, n4];
       nn.forEach((kk) => {
         const fb_pos = spn_to_fboard_list[cap(kk.toString())];
         if (fb_pos !== undefined) {
@@ -108,7 +109,7 @@ export const fingers = (root, qual, forms, max_frets = 12) => {
     }
   });
   if (forms.length > 0) {
-    lighten_list(res);
+    fade_list(res);
     highlight(res, qual, forms);
   }
   return res;
@@ -125,29 +126,32 @@ export const hsl2str = (fingers) => {
   return fingers;
 };
 
-export const darken = (f) => {
+export const unfade = (f) => {
+  console.log(f);
   Object.keys(f[2]).forEach((k) => {
     if (f[2][k] instanceof hsla) {
-      f[2][k] = f[2][k].darken();
+      f[2][k] = f[2][k].unfade();
     }
   });
 };
 
-export const lighten = (f) => {
+export const fade = (f) => {
   Object.keys(f[2]).forEach((k) => {
     if (f[2][k] instanceof hsla) {
-      f[2][k] = f[2][k].lighten();
+      f[2][k] = f[2][k].fade();
     }
   });
 };
-export const lighten_list = (fingers) => {
-  fingers.forEach((f) => lighten(f));
+
+export const fade_list = (fingers) => {
+  fingers.forEach((f) => fade(f));
   return fingers;
 };
 
-export const strIdx = { E: 6, A: 5, D: 4, G: 3, B: 2, e: 1 };
+export const strIdx = { E: 6, A: 5, D: 4, G: 6, C: 5 };
 
 export const highlight = (fingers, qual, forms) => {
+  if (forms.length === 0) return fingers;
   const match = (f, s, deg) => {
     return (
       f[0] === s &&
@@ -155,13 +159,11 @@ export const highlight = (fingers, qual, forms) => {
     );
   };
   const q = mapFindByValue(quals, (x) => x.il === qual).v;
-  if (forms.length === 0) return fingers;
+  console.log(q.caged[forms[0]]);
   forms.forEach((form) => {
     q.caged[form].forEach((x, i) => {
-      const f = mapFindByValue(fingers, (y) =>
-        match(y, strIdx[form] - i, q.caged[form][i])
-      ).v;
-      darken(f);
+      const f = mapFindByValue(fingers, (y) => match(y, strIdx[form] - i, x)).v;
+      if (f !== undefined) unfade(f);
     });
   });
 };

@@ -5,6 +5,7 @@ import Chord from "./components/Chord";
 import Input from "./components/Input";
 import Teoria from "./components/Teoria";
 import InfoPanel from "./components/InfoPanel";
+import CagedSelctor from "./components/CagedSelctor";
 
 const Home = () => {
   const [root, setRoot] = useState("A");
@@ -29,9 +30,10 @@ const Home = () => {
         qual={qual}
         forms={forms}
       />
+      <CagedSelctor root={root} qual={qual} caged={forms} onInputChanged={handleInputEvent} />
       <InfoPanel root={root} qual={qual} />
       <Chord root={root} qual={qual} forms={forms} />
-      <Teoria />
+      {/* <Teoria /> */}
     </div>
   );
 };
