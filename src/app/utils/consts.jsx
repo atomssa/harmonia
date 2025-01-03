@@ -61,6 +61,10 @@ export let finger_sty = {
   M7: { color: new hsla(0, 0, 0.31), ...sty_all },
   m7: { color: new hsla(0, 0, 0.31), ...sty_all },
   M6: { color: new hsla(100, 0, 0.31), ...sty_all },
+  M9: { color: new hsla(100, 0, 0.31), ...sty_all },
+  m9: { color: new hsla(100, 0, 0.31), ...sty_all },
+  A9: { color: new hsla(100, 0, 0.31), ...sty_all },
+  m13: { color: new hsla(100, 0, 0.31), ...sty_all },
 };
 
 export const ren_all = { P1: "R" };
@@ -208,6 +212,9 @@ export const quals = new Map([
       caged: fix_caged({
         A: { 2: 6, 4: null },
         E: { 1: null, 2: 6, 5: null },
+        D: { 2: 6 },
+        C: null,
+        G: null,
       }),
     },
   ],
@@ -218,7 +225,13 @@ export const quals = new Map([
       prune: ["P5"],
       ren: { ...ren_all },
       alt: [],
-      caged: { ...caged_all },
+      caged: fix_caged({
+        A: { 1: 3, 2: 7, 3: 9, 4: null },
+        D: { 1: 3, 2: 7, 3: 9 },
+        C: null,
+        E: null,
+        G: null,
+      }),
     },
   ],
   [
@@ -226,9 +239,15 @@ export const quals = new Map([
     {
       il: "Mm7b9",
       prune: ["P5"],
-      ren: { ...ren_all },
+      ren: { ...ren_all, m9: "♭9" },
       alt: [],
-      caged: { ...caged_all },
+      caged: fix_caged({
+        A: { 1: 3, 2: 7, 3: 9, 4: null },
+        D: { 1: 3, 2: 7, 3: 9 },
+        C: null,
+        E: null,
+        G: null,
+      }),
     },
   ],
   [
@@ -238,7 +257,13 @@ export const quals = new Map([
       prune: ["P5"],
       ren: { ...ren_all, A9: "#9" },
       alt: [],
-      caged: { ...caged_all },
+      caged: fix_caged({
+        A: { 1: 3, 2: 7, 3: 9, 4: null },
+        D: { 1: 3, 2: 7, 3: 9 },
+        C: null,
+        E: null,
+        G: null,
+      }),
     },
   ],
   [
@@ -246,9 +271,12 @@ export const quals = new Map([
     {
       il: "Mb13",
       prune: ["M9", "P11", "P5"],
-      ren: { ...ren_all },
+      ren: { ...ren_all, m13: "♭13" },
       alt: ["7(#5)"],
-      caged: { ...caged_all },
+      caged: fix_caged({
+        E: { 1: null, 2: 7, 4: 13, 5: null },
+        A: { 1: 3, 2: 7, 3: null, 4: 13 },
+      }),
     },
   ],
   [
