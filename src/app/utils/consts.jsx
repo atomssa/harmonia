@@ -77,14 +77,18 @@ export const caged_all = {
 export const fix_caged = (fix) => {
   var ret = { ...caged_all };
   Object.keys(fix).forEach((k) => {
-    if (k in fix) {
-      ret[k] = caged_all[k]
-        .map((x, i) => {
-          return i in fix[k] ? fix[k][i] : x;
-        })
-        .filter((x) => x !== 0);
-    } else {
+    if (!(k in fix)) {
       ret[k] = caged_all[k];
+    } else {
+      if (fix[k] === null) {
+        delete ret[k];
+      } else {
+        ret[k] = caged_all[k]
+          .map((x, i) => {
+            return i in fix[k] ? fix[k][i] : x;
+          })
+          .filter((x) => x !== 0);
+      }
     }
   });
   return ret;
@@ -113,7 +117,9 @@ export const quals = new Map([
       prune: [],
       ren: { ...ren_all },
       alt: [],
-      caged: { ...caged_all },
+      caged: fix_caged({
+        C: null,
+      }),
     },
   ],
   [
@@ -124,10 +130,11 @@ export const quals = new Map([
       ren: { ...ren_all },
       alt: [],
       caged: fix_caged({
-        C: { 2: 7, 4: undefined },
+        C: { 2: 7, 4: null },
         E: { 2: 7 },
         D: { 2: 7 },
         A: { 2: 7 },
+        G: null,
       }),
     },
   ],
@@ -153,8 +160,8 @@ export const quals = new Map([
       ren: { ...ren_all },
       alt: [],
       caged: fix_caged({
-        E: { 1: SKIP, 2: 7, 5: SKIP },
-        A: { 2: 7, 4: SKIP },
+        E: { 1: null, 2: 7, 5: null },
+        A: { 2: 7, 4: null },
         D: { 2: 7 },
         C: { 3: 7 },
       }),
@@ -168,8 +175,8 @@ export const quals = new Map([
       ren: { ...ren_all },
       alt: [],
       caged: fix_caged({
-        E: { 1: SKIP, 2: 7, 5: SKIP },
-        A: { 2: 7, 4: SKIP },
+        E: { 1: null, 2: 7, 5: null },
+        A: { 2: 7, 4: null },
         D: { 2: 7 },
       }),
     },

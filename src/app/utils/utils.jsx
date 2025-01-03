@@ -2,6 +2,7 @@ import t from "teoria";
 import { spn_to_fboard_list } from "../utils/spn";
 import { hsla, quals } from "./consts";
 import { finger_sty } from "./consts";
+import { root } from "postcss";
 export const pprint = (a, cls = "rnd") => {
   return a
     .map((n) => <span className={cls}>{n}</span>)
@@ -70,6 +71,14 @@ export const formatRoot = (root) => {
   return root;
 };
 
+export const mapFiltByValue = (map, searchFunc) => {
+  let ret = [];
+  for (let [key, value] of map.entries()) {
+    if (searchFunc(value)) ret.push({ k: key, v: value });
+  }
+  return ret;
+};
+
 export const mapFindByValue = (map, searchFunc) => {
   for (let [key, value] of map.entries()) {
     if (searchFunc(value)) return { k: key, v: value };
@@ -110,7 +119,7 @@ export const fingers = (root, qual, forms, max_frets = 12) => {
   });
   if (forms.length > 0) {
     fade_list(res);
-    highlight(res, qual, forms);
+    highlight(res, qual, forms, max_frets);
   }
   return res;
 };
@@ -127,7 +136,6 @@ export const hsl2str = (fingers) => {
 };
 
 export const unfade = (f) => {
-  console.log(f);
   Object.keys(f[2]).forEach((k) => {
     if (f[2][k] instanceof hsla) {
       f[2][k] = f[2][k].unfade();
@@ -150,21 +158,37 @@ export const fade_list = (fingers) => {
 
 export const strIdx = { E: 6, A: 5, D: 4, G: 6, C: 5 };
 
-export const highlight = (fingers, qual, forms) => {
+export const highlight = (fingers, qual, forms, max_frets) => {
   if (forms.length === 0) return fingers;
-  const match = (f, s, deg) => {
+  const match = (f, s, deg, r) => {
     return (
       f[0] === s &&
-      (f[2].text.includes(deg) || (f[2].text === "R" && deg === 1))
+      (f[2].text.includes(deg) || (f[2].text === "R" && deg === 1)) &&
+      f[1] <= max_frets &&
+      (r === undefined || Math.abs(r[1] - f[1]) <= 5)
     );
   };
   const q = mapFindByValue(quals, (x) => x.il === qual).v;
-  console.log(q.caged[forms[0]]);
   forms.forEach((form) => {
-    q.caged[form].forEach((x, i) => {
-      const f = mapFindByValue(fingers, (y) => match(y, strIdx[form] - i, x)).v;
-      if (f !== undefined) unfade(f);
-    });
+    const degrees = q.caged[form];
+    const roots = mapFiltByValue(fingers, (y) =>
+      match(y, strIdx[form], degrees[0])
+    ).map((x) => x.v);
+
+    let toUnfade = [];
+    let idx = 0;
+    while (idx < roots.length && toUnfade.length != degrees.length) {
+      const root = roots[idx];
+      toUnfade = [];
+      degrees.forEach((deg, i) => {
+        const f = mapFindByValue(fingers, (y) =>
+          match(y, strIdx[form] - i, deg, root)
+        ).v;
+        f && toUnfade.push(f);
+      });
+      idx++;
+    }
+    toUnfade.forEach((f) => unfade(f));
   });
 };
 
