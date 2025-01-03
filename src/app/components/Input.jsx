@@ -1,7 +1,7 @@
 "use client";
 
 import { notes, quals, caged_all } from "../utils/consts";
-import { mapFindByValue } from "../utils/utils";
+import { mapFindByValue, pprint } from "../utils/utils";
 import Button from "./Button";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 
@@ -16,7 +16,7 @@ const Input = ({ onInputChanged, root, qual, forms }) => {
     closePopover();
   };
 
-  const toggleForm = (f) => {
+  const toggleForm = (f, closePopover) => {
     if (forms.includes(f)) {
       onInputChanged(
         root,
@@ -26,108 +26,72 @@ const Input = ({ onInputChanged, root, qual, forms }) => {
     } else {
       onInputChanged(root, qual, [...forms, f]);
     }
+    if (closePopover !== undefined) closePopover();
   };
-  return (
-    <div>
-      <div className="flex ml-3">
-        <Popover className="relative">
-          <PopoverButton
-            className="text-primary m-1 p-1 border-primary border-2 rounded-lg bg-background-300 
-            shadow-sm shadow-gray-500 hover:shadow-md hover:shadow-gray-700 hover:bg-primary 
-            hover:text-white focus:outline-0"
-          >
-            Root - {root}
-          </PopoverButton>
-          <PopoverPanel
-            anchor="bottom"
-            className="flex mx-3 my-1 flex-wrap border-background-300 border-2 p-2 w-96 bg-background-200 shadow-lg"
-          >
-            {({ close }) =>
-              Array.from(notes.keys()).map((n, i) => (
-                <Button
-                  isClicked={notes.get(n) === root}
-                  key={`note_${i}`}
-                  onBtnClicked={() => handleClick("note", notes.get(n), close)}
-                >
-                  {n}
-                </Button>
-              ))
-            }
-          </PopoverPanel>
-        </Popover>
 
-        <Popover className="relative">
-          <PopoverButton
-            className="text-primary m-1 p-1 border-primary border-2 rounded-lg bg-background-300 
-            shadow-sm shadow-gray-500 hover:shadow-md hover:shadow-gray-700 hover:bg-primary 
-            hover:text-white focus:outline-0"
-          >
-            Quality - {mapFindByValue(quals, (x) => x.il === qual).k}
-          </PopoverButton>
-          <PopoverPanel
-            anchor="bottom"
-            className="flex mx-3 my-1 flex-wrap border-background-300 border-2 p-2 w-96 bg-background-200 shadow-lg"
-          >
-            {({ close }) =>
-              Array.from(quals.keys()).map((q, i) => (
-                <Button
-                  isClicked={quals.get(q).il === qual}
-                  key={`qual_${i}`}
-                  onBtnClicked={() =>
-                    handleClick("qual", quals.get(q).il, close)
-                  }
-                >
-                  {q}
-                </Button>
-              ))
-            }
-          </PopoverPanel>
-        </Popover>
-        <div className="flex">
-          <p className="ml-4 text-primary py-2">CAGED form: </p>
-          <Button
-            isClicked={forms.includes("E")}
-            onBtnClicked={() => toggleForm("E")}
-          >
-            E
-          </Button>
-          <Button
-            isClicked={forms.includes("A")}
-            onBtnClicked={() => toggleForm("A")}
-          >
-            A
-          </Button>
-          <Button
-            isClicked={forms.includes("D")}
-            onBtnClicked={() => toggleForm("D")}
-          >
-            D
-          </Button>
-        </div>
-        {/* <div>
-          <p>WTF</p>
-          {Object.keys(caged_all).forEach((f) => (
-            <Button
-              key={`form_${f}`}
-              isClicked={forms.includes(f)}
-              onBtnClicked={() => onInputChanged(root, qual, f)}
-            >
-              {f}
-            </Button>
-          ))}
-        </div> */}
-      </div>
-      {/* <div>
-        {Object.keys(caged_all).forEach((f) => (
-          <Button
-            key={`form_${f}`}
-            isClicked={forms.includes(f)}
-            onBtnClicked={() => onInputChanged(root, qual, f)}
-          >
-            {f}
-          </Button>
-        ))}
-      </div> */}
+  return (
+    <div className="flex ml-3">
+      <Popover className="relative">
+        <PopoverButton className="popover-btn">
+          <p className="border-2 border-transparent">Root</p>
+          <p className="ml-1">{pprint([root], "rnd-sm")}</p>
+        </PopoverButton>
+        <PopoverPanel anchor="bottom" className="popover-panel">
+          {({ close }) =>
+            Array.from(notes.keys()).map((n, i) => (
+              <Button
+                isClicked={notes.get(n) === root}
+                key={`note_${i}`}
+                onBtnClicked={() => handleClick("note", notes.get(n), close)}
+              >
+                {n}
+              </Button>
+            ))
+          }
+        </PopoverPanel>
+      </Popover>
+
+      <Popover className="relative">
+        <PopoverButton className="popover-btn">
+          <p className="border-2 border-transparent">Quality</p>
+          <p className="ml-1">
+            {pprint([mapFindByValue(quals, (x) => x.il === qual).k], "rnd-sm")}
+          </p>
+        </PopoverButton>
+        <PopoverPanel anchor="bottom" className="popover-panel">
+          {({ close }) =>
+            Array.from(quals.keys()).map((q, i) => (
+              <Button
+                isClicked={quals.get(q).il === qual}
+                key={`qual_${i}`}
+                onBtnClicked={() => handleClick("qual", quals.get(q).il, close)}
+              >
+                {q}
+              </Button>
+            ))
+          }
+        </PopoverPanel>
+      </Popover>
+
+      <Popover className="relative">
+        <PopoverButton className="popover-btn">
+          <p className="border-2 border-transparent"> CAGED </p>
+          <p className="ml-1"> {pprint(forms, "rnd-sm")} </p>
+        </PopoverButton>
+        <PopoverPanel anchor="bottom" className="popover-panel w-it">
+          {({ close }) =>
+            Object.keys(caged_all).map((f) => (
+              <Button
+                key={`caged_${f}`}
+                isClicked={forms.includes(f)}
+                onBtnClicked={() => toggleForm(f, close)}
+              >
+                {f}
+              </Button>
+            ))
+          }
+        </PopoverPanel>
+      </Popover>
     </div>
   );
 };
