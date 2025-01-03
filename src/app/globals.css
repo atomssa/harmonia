@@ -29,3 +29,15 @@ body {
 .rnd {
   @apply border-primary border-2 rounded-full ml-2 p-1 inline-block w-fit min-w-9 text-center;
 }
+
+.rnd-sm {
+  @apply border-primary mr-1 border-2 rounded-full inline-block w-fit min-w-6 text-center;
+}
+
+.popover-btn {
+  @apply flex text-primary m-1 p-1 border-primary border-2 rounded-lg bg-background-300 shadow-sm shadow-gray-500 hover:shadow-md hover:shadow-gray-700 hover:bg-primary hover:text-white focus:outline-0;
+}
+
+.popover-panel {
+  @apply flex mx-3 my-1 flex-wrap border-background-300 border-2 p-2 w-96 bg-background-200 shadow-lg;
+}
