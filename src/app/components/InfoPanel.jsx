@@ -8,7 +8,7 @@ import {
 } from "../utils/utils";
 import { quals } from "../utils/consts";
 
-export default function Intervals({ root, qual }) {
+export default function InfoPanel({ root, qual }) {
   return (
     <div className="flex flex-col lg:flex-row text-primary ml-4 p-1 border-primary border-2 rounded-lg w-fit">
       <div className="ml-2 lg:ml-5 mb-1 lg:mb-0">

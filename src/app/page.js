@@ -4,7 +4,7 @@ import { useState } from "react";
 import Chord from "./components/Chord";
 import Input from "./components/Input";
 import Teoria from "./components/Teoria";
-import Intervals from "./components/Intervals";
+import InfoPanel from "./components/InfoPanel";
 
 const Home = () => {
   const [root, setRoot] = useState("A");
@@ -29,7 +29,7 @@ const Home = () => {
         qual={qual}
         forms={forms}
       />
-      <Intervals root={root} qual={qual} />
+      <InfoPanel root={root} qual={qual} />
       <Chord root={root} qual={qual} forms={forms} />
       <Teoria />
     </div>
