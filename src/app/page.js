@@ -30,7 +30,7 @@ const Home = () => {
         qual={qual}
         forms={forms}
       />
-      <CagedSelctor root={root} qual={qual} caged={forms} onInputChanged={handleInputEvent} />
+      {/* <CagedSelctor root={root} qual={qual} caged={forms} onInputChanged={handleInputEvent} /> */}
       <InfoPanel root={root} qual={qual} />
       <Chord root={root} qual={qual} forms={forms} />
       {/* <Teoria /> */}
